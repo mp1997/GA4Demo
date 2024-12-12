@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Navbar, Main, Product, Footer } from "../components";
+import { Navbar, Main, Product } from "../components";
 
 function Home() {
   const sendCustomEvent = () => {
@@ -9,6 +9,7 @@ function Home() {
       event_timestamp: eventTimestamp, // Matches the parameter name in GA4 custom dimension
       additional_param1: "value1",
       additional_param2: "value2",
+      debug_mode: true,
     });
 
     console.log("Custom event triggered with timestamp:", eventTimestamp);
@@ -23,7 +24,6 @@ function Home() {
       <Navbar />
       <Main />
       <Product />
-      <Footer />
     </>
   );
 }

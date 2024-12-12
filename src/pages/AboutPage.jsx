@@ -1,5 +1,5 @@
 import React from 'react'
-import { Footer, Navbar } from "../components";
+import {  Navbar } from "../components";
 const AboutPage = () => {
   return (
     <>
@@ -59,7 +59,6 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }
