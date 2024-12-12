@@ -8,6 +8,7 @@ function Home() {
 
     gtag('event', 'custom_event', {
       event_timestamp: Date.now(), // Add this custom parameter
+      debug_mode: true,
     });
 
     console.log("Custom event triggered with timestamp:", eventTimestamp);
