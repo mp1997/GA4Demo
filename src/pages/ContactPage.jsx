@@ -1,5 +1,5 @@
 import React from "react";
-import { Footer, Navbar } from "../components";
+import { Navbar } from "../components";
 const ContactPage = () => {
   return (
     <>
@@ -50,7 +50,6 @@ const ContactPage = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
