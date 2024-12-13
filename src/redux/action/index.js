@@ -1,3 +1,11 @@
+// to Store Product
+export const SET_PRODUCT = 'SET_PRODUCT';
+
+export const storeProduct = (product) => ({
+  type: SET_PRODUCT,
+  payload: product,
+});
+
 // For Add Item to Cart
 export const addCart = (product) =>{
     return {

@@ -3,7 +3,7 @@ import Skeleton from "react-loading-skeleton";
 import { Link, useParams } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { useDispatch } from "react-redux";
-import { addCart } from "../redux/action";
+import { addCart, storeProduct } from "../redux/action";
 
 import {  Navbar } from "../components";
 
@@ -19,6 +19,15 @@ const Product = () => {
   const addProduct = (product) => {
     dispatch(addCart(product));
   };
+
+  const selectProduct = (product) => {
+    console.log(product)
+    dispatch(storeProduct(product));
+  };
+
+  // useEffect(() => {
+  //   dispatch(storeProduct(product));
+  // }, [product, dispatch]);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -150,6 +159,7 @@ const Product = () => {
                     <Link
                       to={"/product/" + item.id}
                       className="btn btn-dark m-1"
+                      onClick={()=>selectProduct(item)}
                     >
                       Buy Now
                     </Link>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addCart } from "../redux/action";
+import { addCart, storeProduct } from "../redux/action";
 
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -18,6 +18,11 @@ const Products = () => {
 
   const addProduct = (product) => {
     dispatch(addCart(product));
+  };
+
+  const selectProduct = (product) => {
+    console.log(product)
+    dispatch(storeProduct(product));
   };
 
   useEffect(() => {
@@ -138,6 +143,7 @@ const Products = () => {
                   <Link
                     to={"/product/" + product.id}
                     className="btn btn-dark m-1"
+                      onClick={()=>selectProduct(product)}
                   >
                     Buy Now
                   </Link>
