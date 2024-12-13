@@ -3,10 +3,20 @@ import { Navbar } from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { addCart, delCart } from "../redux/action";
 import { Link } from "react-router-dom";
+import { gtag } from "ga-gtag";
 
 const Cart = () => {
   const state = useSelector((state) => state.handleCart);
   const dispatch = useDispatch();
+
+  const sendCustomEvent = (totalItems) => {
+    gtag("event", "custom_event", {
+      total_item_quantity: totalItems,
+      debug_mode: true,
+    });
+
+    console.log("Custom event triggered with timestamp:", totalItems);
+  };
 
   const EmptyCart = () => {
     return (
@@ -41,6 +51,9 @@ const Cart = () => {
     state.map((item) => {
       return (totalItems += item.qty);
     });
+
+    sendCustomEvent(totalItems)
+
     return (
       <>
         <section className="h-100 gradient-custom">
