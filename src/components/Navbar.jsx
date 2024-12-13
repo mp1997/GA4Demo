@@ -31,7 +31,7 @@ const Navbar = () => {
           onClick={(e) => eventTracker("Home Page", "/Home")}
         >
           {" "}
-          React Ecommerce
+          Ecommerce
         </NavLink>
         <button
           className="navbar-toggler mx-2"

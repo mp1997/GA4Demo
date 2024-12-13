@@ -48,7 +48,7 @@ function Home() {
   useEffect(() => {
     if (isAuthenticated) {
       sendCustomEvent();
-    }
+    
     let timeout;
     const resetTimeout = () => {
       clearTimeout(timeout);
@@ -71,6 +71,7 @@ function Home() {
       window.removeEventListener("mousemove", resetTimeout);
       window.removeEventListener("keydown", resetTimeout);
     };
+  }
   }, [isAuthenticated]);
 
   const handleLogout = () => {
