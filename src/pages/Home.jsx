@@ -12,7 +12,7 @@ function Home() {
     sessionStorage.getItem("loggedIn") === "true"
   );
   
-  const eventTimestamp = Date.now(); // or a specific timestamp
+  const eventTimestamp = Date.now();
   const firstName = sessionStorage.getItem("userFirstName");
   const lastName = sessionStorage.getItem("userLastName");
   const userID = sessionStorage.getItem("userID");
@@ -28,20 +28,28 @@ function Home() {
   const sendCustomEvent = () => {
     gtag("event", "custom_event", {
       event_timestamp: eventTimestamp,
-      item_category: product?.category,
-      item_id: product?.id,
-      item_price: product?.price,
-      item_name: product?.title,
-      total_item_quantity: totalItems,
-      first_name: firstName,
-      last_name: lastName,
-      pseudo_user_id: userID,
-      user_email: userEmail,
-      is_active_user: "True",
-      user_first_touch_timestamp: sessionLogin,
       debug_mode: true,
     });
 
+    gtag('item', 'custom_item', {
+      item_id: product?.id,
+      item_category: product?.category,
+      item_name: product?.title,
+      item_price: product?.price,
+      total_item_quantity: totalItems,
+      debug_mode: true,
+    });
+
+    gtag('user', 'custom_user', {
+      pseudo_user_id: userID,
+      first_name: firstName,
+      last_name: lastName,
+      user_email: userEmail,
+      is_active_user: 'True',
+      user_first_touch_timestamp: sessionLogin,
+      debug_mode: true,
+    });
+    
     console.log("Custom event triggered with timestamp:");
   };
 

@@ -10,7 +10,7 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const sendCustomEvent = (totalItems) => {
-    gtag("event", "custom_event", {
+    gtag("item", "custom_item", {
       total_item_quantity: totalItems,
       debug_mode: true,
     });
