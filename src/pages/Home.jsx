@@ -52,6 +52,41 @@ function Home() {
       debug_mode: true,
     });
 
+    gtag("event", "add_to_cart", {
+      event_timestamp: eventTimestamp,
+      item_id: product?.id,
+      item_category: product?.category,
+      item_name: product?.title,
+      item_price: product?.price,
+      total_item_quantity: totalItems,
+      pseudo_user_id: userID,
+      first_name: firstName,
+      last_name: lastName,
+      user_email: userEmail,
+      is_active_user: "True",
+      user_first_touch_timestamp: sessionLogin,
+      item_timestamp: Date.now(),
+      user_timestamp: Date.now(),
+      debug_mode: true,
+    });
+
+    gtag("event", "view_cart", {
+      event_timestamp: eventTimestamp,
+      item_id: product?.id,
+      item_category: product?.category,
+      item_name: product?.title,
+      item_price: product?.price,
+      total_item_quantity: totalItems,
+      pseudo_user_id: userID,
+      first_name: firstName,
+      last_name: lastName,
+      user_email: userEmail,
+      is_active_user: "True",
+      user_first_touch_timestamp: sessionLogin,
+      item_timestamp: Date.now(),
+      user_timestamp: Date.now(),
+      debug_mode: true,
+    });
 
     // gtag('item', 'custom_item', {
     //   item_id: product?.id,
