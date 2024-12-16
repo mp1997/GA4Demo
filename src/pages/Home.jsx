@@ -26,6 +26,16 @@ function Home() {
   const navigate = useNavigate();
 
   const sendCustomEvent = () => {
+    gtag("set", "user_properties", {
+      pseudo_user_id: userID,
+      first_name: firstName,
+      last_name: lastName,
+      user_email: userEmail,
+      is_active_user: "True",
+      user_first_touch_timestamp: sessionLogin,
+      debug_mode: true,
+    });
+
     gtag("event", "custom_event", {
       event_timestamp: eventTimestamp,
       item_id: product?.id,
@@ -39,26 +49,9 @@ function Home() {
       // user_email: userEmail,
       // is_active_user: 'True',
       // user_first_touch_timestamp: sessionLogin,
-      customEventName: "user_action",
-      customProperties: {
-        pseudo_user_id: userID,
-        first_name: firstName,
-        last_name: lastName,
-        is_active_user: "True",
-        user_first_touch_timestamp: sessionLogin,
-      },
       debug_mode: true,
     });
 
-    gtag("set", "user_properties", {
-      pseudo_user_id: userID,
-      first_name: firstName,
-      last_name: lastName,
-      user_email: userEmail,
-      is_active_user: "True",
-      user_first_touch_timestamp: sessionLogin,
-      debug_mode: true,
-    });
 
     // gtag('item', 'custom_item', {
     //   item_id: product?.id,
