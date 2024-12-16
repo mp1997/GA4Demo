@@ -11,14 +11,14 @@ function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     sessionStorage.getItem("loggedIn") === "true"
   );
-  
+
   const eventTimestamp = Date.now();
   const firstName = sessionStorage.getItem("userFirstName");
   const lastName = sessionStorage.getItem("userLastName");
   const userID = sessionStorage.getItem("userID");
   const userEmail = sessionStorage.getItem("userEmail");
-  let totalItems =0;
-  const sessionLogin=sessionStorage.getItem("sessionStart");
+  let totalItems = 0;
+  const sessionLogin = sessionStorage.getItem("sessionStart");
   state.map((item) => {
     return (totalItems += item.qty);
   });
@@ -33,11 +33,21 @@ function Home() {
       item_name: product?.title,
       item_price: product?.price,
       total_item_quantity: totalItems,
+      // pseudo_user_id: userID,
+      // first_name: firstName,
+      // last_name: lastName,
+      // user_email: userEmail,
+      // is_active_user: 'True',
+      // user_first_touch_timestamp: sessionLogin,
+      debug_mode: true,
+    });
+
+    gtag("set", "user_properties", {
       pseudo_user_id: userID,
       first_name: firstName,
       last_name: lastName,
       user_email: userEmail,
-      is_active_user: 'True',
+      is_active_user: "True",
       user_first_touch_timestamp: sessionLogin,
       debug_mode: true,
     });
@@ -60,37 +70,37 @@ function Home() {
     //   user_first_touch_timestamp: sessionLogin,
     //   debug_mode: true,
     // });
-    
+
     console.log("Custom event triggered with timestamp:");
   };
 
   useEffect(() => {
     if (isAuthenticated) {
       sendCustomEvent();
-    
-    let timeout;
-    const resetTimeout = () => {
-      clearTimeout(timeout);
-      const currentTime = new Date().toISOString();
-      sessionStorage.setItem("lastActivity", currentTime); // Update last activity time
-      timeout = setTimeout(() => {
-        handleLogout();
-      }, sessionTimeout);
-    };
 
-    // Set timeout on initial load
-    resetTimeout();
+      let timeout;
+      const resetTimeout = () => {
+        clearTimeout(timeout);
+        const currentTime = new Date().toISOString();
+        sessionStorage.setItem("lastActivity", currentTime); // Update last activity time
+        timeout = setTimeout(() => {
+          handleLogout();
+        }, sessionTimeout);
+      };
 
-    window.addEventListener("mousemove", resetTimeout);
-    window.addEventListener("keydown", resetTimeout);
+      // Set timeout on initial load
+      resetTimeout();
 
-    return () => {
-      // Cleanup on component unmount
-      clearTimeout(timeout);
-      window.removeEventListener("mousemove", resetTimeout);
-      window.removeEventListener("keydown", resetTimeout);
-    };
-  }
+      window.addEventListener("mousemove", resetTimeout);
+      window.addEventListener("keydown", resetTimeout);
+
+      return () => {
+        // Cleanup on component unmount
+        clearTimeout(timeout);
+        window.removeEventListener("mousemove", resetTimeout);
+        window.removeEventListener("keydown", resetTimeout);
+      };
+    }
   }, [isAuthenticated]);
 
   const handleLogout = () => {
