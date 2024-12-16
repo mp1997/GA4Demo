@@ -16,7 +16,7 @@ function Home() {
   const firstName = sessionStorage.getItem("userFirstName");
   const lastName = sessionStorage.getItem("userLastName");
   const userID = sessionStorage.getItem("userID");
-  const userEmail = sessionStorage.getItem("userEmail");
+  // const userEmail = sessionStorage.getItem("userEmail");
   let totalItems = 0;
   const sessionLogin = sessionStorage.getItem("sessionStart");
   state.map((item) => {
