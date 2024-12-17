@@ -21,6 +21,12 @@ function Home() {
   state.map((item) => {
     return (totalItems += item.qty);
   });
+  const items = product.map((prod) => ({
+    id: prod?.id?.toString(),
+    name: product?.title,
+    price: product?.price,
+    category: product.category,
+  }));
 
   const navigate = useNavigate();
 
@@ -51,14 +57,7 @@ function Home() {
 
     gtag("event", "add_to_cart", {
       event_timestamp: eventTimestamp,
-      items: [
-        {
-          item_id: product?.id,
-          item_category: product?.category,
-          item_name: product?.title,
-          item_price: product?.price,
-        },
-      ],
+      items: items,
       total_item_quantity: totalItems,
       pseudo_user_id: userID,
       first_name: firstName,
@@ -72,14 +71,7 @@ function Home() {
 
     gtag("event", "view_cart", {
       event_timestamp: eventTimestamp,
-      items: [
-        {
-          id: product?.id,
-          category: product?.category,
-          name: product?.title,
-          price: product?.price,
-        },
-      ],
+      items: items,
       total_item_quantity: totalItems,
       pseudo_user_id: userID,
       first_name: firstName,

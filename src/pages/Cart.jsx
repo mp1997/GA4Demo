@@ -17,17 +17,16 @@ const Cart = () => {
     const lastName = sessionStorage.getItem("userLastName");
     const userID = sessionStorage.getItem("userID");
     const sessionLogin = sessionStorage.getItem("sessionStart");
+    const items = product.map((prod) => ({
+      id: prod?.id?.toString(),
+      name: product?.title,
+      price: product?.price,
+      category: product.category,
+    }));
 
     gtag("event", "view_cart", {
       event_timestamp: eventTimestamp,
-      items: [
-        {
-          itemId: product?.id,
-          itemCategory: product?.category,
-          item_name: product?.title,
-          item_price: product?.price,
-        },
-      ],
+      items: items,
       total_item_quantity: totalItems,
       pseudo_user_id: userID,
       first_name: firstName,

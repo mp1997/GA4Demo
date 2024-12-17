@@ -1,7 +1,7 @@
 import { SET_PRODUCT } from '../action/index';
 
 const initialState = {
-  product: null,
+  product: [],
 };
 
 const productReducer = (state = initialState, action) => {
@@ -9,7 +9,7 @@ const productReducer = (state = initialState, action) => {
     case SET_PRODUCT:
       return {
         ...state,
-        product: action.payload,
+        product: [...state.product, action.payload],
       };
     default:
       return state;
