@@ -19,9 +19,9 @@ const Cart = () => {
     const sessionLogin = sessionStorage.getItem("sessionStart");
     const items = product.map((prod) => ({
       id: prod?.id?.toString(),
-      name: product?.title,
-      price: product?.price,
-      category: product.category,
+      name: prod?.title,
+      price: prod?.price,
+      category: prod.category,
     }));
 
     gtag("event", "view_cart", {

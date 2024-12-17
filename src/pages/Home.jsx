@@ -23,9 +23,9 @@ function Home() {
   });
   const items = product.map((prod) => ({
     id: prod?.id?.toString(),
-    name: product?.title,
-    price: product?.price,
-    category: product.category,
+    name: prod?.title,
+    price: prod?.price,
+    category: prod.category,
   }));
 
   const navigate = useNavigate();
