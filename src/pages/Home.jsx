@@ -16,7 +16,6 @@ function Home() {
   const firstName = sessionStorage.getItem("userFirstName");
   const lastName = sessionStorage.getItem("userLastName");
   const userID = sessionStorage.getItem("userID");
-  // const userEmail = sessionStorage.getItem("userEmail");
   let totalItems = 0;
   const sessionLogin = sessionStorage.getItem("sessionStart");
   state.map((item) => {
@@ -42,20 +41,24 @@ function Home() {
     //   item_name: product?.title,
     //   item_price: product?.price,
     //   total_item_quantity: totalItems,
-      // pseudo_user_id: userID,
-      // first_name: firstName,
-      // last_name: lastName,
-      // is_active_user: 'True',
-      // user_first_touch_timestamp: sessionLogin,
+    // pseudo_user_id: userID,
+    // first_name: firstName,
+    // last_name: lastName,
+    // is_active_user: 'True',
+    // user_first_touch_timestamp: sessionLogin,
     //   debug_mode: true,
     // });
 
     gtag("event", "add_to_cart", {
       event_timestamp: eventTimestamp,
-      item_id: product?.id,
-      item_category: product?.category,
-      item_name: product?.title,
-      item_price: product?.price,
+      items: [
+        {
+          itemId: product?.id,
+          itemCategory: product?.category,
+          item_name: product?.title,
+          item_price: product?.price,
+        },
+      ],
       total_item_quantity: totalItems,
       pseudo_user_id: userID,
       first_name: firstName,
@@ -69,10 +72,14 @@ function Home() {
 
     gtag("event", "view_cart", {
       event_timestamp: eventTimestamp,
-      item_id: product?.id,
-      item_category: product?.category,
-      item_name: product?.title,
-      item_price: product?.price,
+      items: [
+        {
+          itemId: product?.id,
+          itemCategory: product?.category,
+          item_name: product?.title,
+          item_price: product?.price,
+        },
+      ],
       total_item_quantity: totalItems,
       pseudo_user_id: userID,
       first_name: firstName,

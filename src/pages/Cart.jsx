@@ -16,15 +16,18 @@ const Cart = () => {
     const firstName = sessionStorage.getItem("userFirstName");
     const lastName = sessionStorage.getItem("userLastName");
     const userID = sessionStorage.getItem("userID");
-    // const userEmail = sessionStorage.getItem("userEmail");
     const sessionLogin = sessionStorage.getItem("sessionStart");
 
     gtag("event", "view_cart", {
       event_timestamp: eventTimestamp,
-      item_id: product?.id,
-      item_category: product?.category,
-      item_name: product?.title,
-      item_price: product?.price,
+      items: [
+        {
+          itemId: product?.id,
+          itemCategory: product?.category,
+          item_name: product?.title,
+          item_price: product?.price,
+        },
+      ],
       total_item_quantity: totalItems,
       pseudo_user_id: userID,
       first_name: firstName,
