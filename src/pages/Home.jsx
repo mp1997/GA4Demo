@@ -26,29 +26,29 @@ function Home() {
   const navigate = useNavigate();
 
   const sendCustomEvent = () => {
-    gtag("set", "user_properties", {
-      pseudo_user_id: userID,
-      first_name: firstName,
-      last_name: lastName,
-      is_active_user: "True",
-      user_first_touch_timestamp: sessionLogin,
-      debug_mode: true,
-    });
+    // gtag("set", "user_properties", {
+    //   pseudo_user_id: userID,
+    //   first_name: firstName,
+    //   last_name: lastName,
+    //   is_active_user: "True",
+    //   user_first_touch_timestamp: sessionLogin,
+    //   debug_mode: true,
+    // });
 
-    gtag("event", "custom_event", {
-      event_timestamp: eventTimestamp,
-      item_id: product?.id,
-      item_category: product?.category,
-      item_name: product?.title,
-      item_price: product?.price,
-      total_item_quantity: totalItems,
+    // gtag("event", "custom_event", {
+    //   event_timestamp: eventTimestamp,
+    //   item_id: product?.id,
+    //   item_category: product?.category,
+    //   item_name: product?.title,
+    //   item_price: product?.price,
+    //   total_item_quantity: totalItems,
       // pseudo_user_id: userID,
       // first_name: firstName,
       // last_name: lastName,
       // is_active_user: 'True',
       // user_first_touch_timestamp: sessionLogin,
-      debug_mode: true,
-    });
+    //   debug_mode: true,
+    // });
 
     gtag("event", "add_to_cart", {
       event_timestamp: eventTimestamp,
@@ -135,7 +135,7 @@ function Home() {
   }, [isAuthenticated]);
 
   const handleLogout = () => {
-    sessionStorage.removeItem("loggedIn");
+    sessionStorage.setItem("loggedIn", "false");
     sessionStorage.removeItem("userEmail");
     sessionStorage.removeItem("userFirstName");
     sessionStorage.removeItem("userLastName");
