@@ -1,15 +1,21 @@
-import { SET_PRODUCT } from '../action/index';
+import { SET_PRODUCT_LIST, VIEW_PRODUCT } from '../action/index';
 
 const initialState = {
-  product: [],
+  productList: [],
+  selectedProduct: null,
 };
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_PRODUCT:
+    case VIEW_PRODUCT:
       return {
         ...state,
-        product: [...state.product, action.payload],
+        selectedProduct: action.payload,
+      };
+    case SET_PRODUCT_LIST:
+      return {
+        ...state,
+        productList: [...state.productList, action.payload],
       };
     default:
       return state;

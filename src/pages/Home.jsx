@@ -1,32 +1,32 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navbar, Main, Product } from "../components";
-import { gtag } from "ga-gtag";
+// import { gtag } from "ga-gtag";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
   const { product } = useSelector((state) => state.productReducer);
-  const state = useSelector((state) => state.handleCart);
+  // const state = useSelector((state) => state.handleCart);
   const sessionTimeout = 2 * 60 * 1000; // 2 minutes in milliseconds
   const [isAuthenticated, setIsAuthenticated] = useState(
     sessionStorage.getItem("loggedIn") === "true"
   );
 
-  const eventTimestamp = Date.now();
-  const firstName = sessionStorage.getItem("userFirstName");
-  const lastName = sessionStorage.getItem("userLastName");
-  const userID = sessionStorage.getItem("userID");
-  let totalItems = 0;
-  const sessionLogin = sessionStorage.getItem("sessionStart");
-  state.map((item) => {
-    return (totalItems += item.qty);
-  });
-  const items = product.map((prod) => ({
-    id: prod?.id?.toString(),
-    name: prod?.title,
-    price: prod?.price,
-    category: prod.category,
-  }));
+  // const eventTimestamp = Date.now();
+  // const firstName = sessionStorage.getItem("userFirstName");
+  // const lastName = sessionStorage.getItem("userLastName");
+  // const userID = sessionStorage.getItem("userID");
+  // let totalItems = 0;
+  // const sessionLogin = sessionStorage.getItem("sessionStart");
+  // state.map((item) => {
+  //   return (totalItems += item.qty);
+  // });
+  // const items = product.map((prod) => ({
+  //   id: prod?.id?.toString(),
+  //   name: prod?.title,
+  //   price: prod?.price,
+  //   category: prod.category,
+  // }));
 
   const navigate = useNavigate();
 
@@ -55,19 +55,21 @@ function Home() {
     //   debug_mode: true,
     // });
 
-    gtag("event", "add_to_cart", {
-      event_timestamp: eventTimestamp,
-      items: items,
-      total_item_quantity: totalItems,
-      pseudo_user_id: userID,
-      first_name: firstName,
-      last_name: lastName,
-      is_active_user: "True",
-      user_first_touch_timestamp: sessionLogin,
-      item_timestamp: Date.now(),
-      user_timestamp: Date.now(),
-      debug_mode: true,
-    });
+    // working code
+
+    // gtag("event", "add_to_cart", {
+    //   event_timestamp: eventTimestamp,
+    //   items: items,
+    //   total_item_quantity: totalItems,
+    //   pseudo_user_id: userID,
+    //   first_name: firstName,
+    //   last_name: lastName,
+    //   is_active_user: "True",
+    //   user_first_touch_timestamp: sessionLogin,
+    //   item_timestamp: Date.now(),
+    //   user_timestamp: Date.now(),
+    //   debug_mode: true,
+    // });
 
     // gtag('item', 'custom_item', {
     //   item_id: product?.id,

@@ -21,8 +21,8 @@ const Cart = () => {
       id: prod?.id?.toString(),
       name: prod?.title,
       price: prod?.price,
-      category: prod.category,
-      quantity: prod.qty,
+      category: prod?.category,
+      quantity: prod?.qty,
     }));
 
     gtag("event", "view_cart", {
@@ -38,11 +38,6 @@ const Cart = () => {
       user_timestamp: Date.now(),
       debug_mode: true,
     });
-
-    // gtag("event", "custom_item", {
-    //   total_item_quantity: totalItems,
-    //   debug_mode: true,
-    // });
 
     console.log("Custom event triggered with timestamp:", totalItems);
   };
