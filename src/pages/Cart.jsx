@@ -9,16 +9,37 @@ const Cart = () => {
   const state = useSelector((state) => state.handleCart);
   const dispatch = useDispatch();
 
+  const { product } = useSelector((state) => state.productReducer);
+
   const sendCustomEvent = (totalItems) => {
-    // gtag("item", "custom_item", {
+    const eventTimestamp = Date.now();
+    const firstName = sessionStorage.getItem("userFirstName");
+    const lastName = sessionStorage.getItem("userLastName");
+    const userID = sessionStorage.getItem("userID");
+    // const userEmail = sessionStorage.getItem("userEmail");
+    const sessionLogin = sessionStorage.getItem("sessionStart");
+
+    gtag("event", "view_cart", {
+      event_timestamp: eventTimestamp,
+      item_id: product?.id,
+      item_category: product?.category,
+      item_name: product?.title,
+      item_price: product?.price,
+      total_item_quantity: totalItems,
+      pseudo_user_id: userID,
+      first_name: firstName,
+      last_name: lastName,
+      is_active_user: "True",
+      user_first_touch_timestamp: sessionLogin,
+      item_timestamp: Date.now(),
+      user_timestamp: Date.now(),
+      debug_mode: true,
+    });
+
+    // gtag("event", "custom_item", {
     //   total_item_quantity: totalItems,
     //   debug_mode: true,
     // });
-
-    gtag("event", "custom_item", {
-      total_item_quantity: totalItems,
-      debug_mode: true,
-    });
 
     console.log("Custom event triggered with timestamp:", totalItems);
   };
@@ -57,7 +78,7 @@ const Cart = () => {
       return (totalItems += item.qty);
     });
 
-    sendCustomEvent(totalItems)
+    sendCustomEvent(totalItems);
 
     return (
       <>
@@ -147,7 +168,8 @@ const Cart = () => {
                   <div className="card-body">
                     <ul className="list-group list-group-flush">
                       <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                        Products ({totalItems})<span>${Math.round(subtotal)}</span>
+                        Products ({totalItems})
+                        <span>${Math.round(subtotal)}</span>
                       </li>
                       <li className="list-group-item d-flex justify-content-between align-items-center px-0">
                         Shipping
