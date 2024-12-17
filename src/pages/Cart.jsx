@@ -4,12 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { addCart, delCart } from "../redux/action";
 import { Link } from "react-router-dom";
 import { gtag } from "ga-gtag";
+import useGAEventTracker from "../hooks/useGAEventsTracker";
 
 const Cart = () => {
   const state = useSelector((state) => state.handleCart);
   const dispatch = useDispatch();
-
-  const { product } = useSelector((state) => state.productReducer);
+  const eventTracker = useGAEventTracker("External Links");
 
   const sendCustomEvent = (totalItems) => {
     const eventTimestamp = Date.now();
@@ -53,7 +53,11 @@ const Cart = () => {
         <div className="row">
           <div className="col-md-12 py-5 bg-light text-center">
             <h4 className="p-3 display-5">Your Cart is Empty</h4>
-            <Link to="/" className="btn  btn-outline-dark mx-4">
+            <Link
+              to="/"
+              className="btn  btn-outline-dark mx-4"
+              onClick={(e) => eventTracker("home Page", "/")}
+            >
               <i className="fa fa-arrow-left"></i> Continue Shopping
             </Link>
           </div>
@@ -191,6 +195,9 @@ const Cart = () => {
                     <Link
                       to="/checkout"
                       className="btn btn-dark btn-lg btn-block"
+                      onClick={(e) =>
+                        eventTracker("Checkout Page", "/checkout")
+                      }
                     >
                       Go to checkout
                     </Link>

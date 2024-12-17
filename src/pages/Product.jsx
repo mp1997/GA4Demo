@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addCart, storeProduct } from "../redux/action";
 
 import { Navbar } from "../components";
+import useGAEventTracker from "../hooks/useGAEventsTracker";
 
 const Product = () => {
   const { id } = useParams();
@@ -13,6 +14,7 @@ const Product = () => {
   const [similarProducts, setSimilarProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
+  const eventTracker = useGAEventTracker("External Links");
 
   const dispatch = useDispatch();
 
@@ -98,7 +100,11 @@ const Product = () => {
               >
                 Add to Cart
               </button>
-              <Link to="/cart" className="btn btn-dark mx-3">
+              <Link
+                to="/cart"
+                className="btn btn-dark mx-3"
+                onClick={(e) => eventTracker("Cart Page", "/cart")}
+              >
                 Go to Cart
               </Link>
             </div>
