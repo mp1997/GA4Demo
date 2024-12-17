@@ -19,7 +19,7 @@ const Login = () => {
     );
 
     if (user) {
-      const currentTime = new Date();
+      const currentTime = Date.now();
       sessionStorage.setItem("loggedIn", "true");
       sessionStorage.setItem("userEmail", user?.email);
       sessionStorage.setItem("userFirstName", user?.firstname);

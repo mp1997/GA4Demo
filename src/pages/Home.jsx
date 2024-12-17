@@ -53,8 +53,8 @@ function Home() {
       event_timestamp: eventTimestamp,
       items: [
         {
-          itemId: product?.id,
-          itemCategory: product?.category,
+          item_id: product?.id,
+          item_category: product?.category,
           item_name: product?.title,
           item_price: product?.price,
         },
@@ -74,10 +74,10 @@ function Home() {
       event_timestamp: eventTimestamp,
       items: [
         {
-          itemId: product?.id,
-          itemCategory: product?.category,
-          item_name: product?.title,
-          item_price: product?.price,
+          id: product?.id,
+          category: product?.category,
+          name: product?.title,
+          price: product?.price,
         },
       ],
       total_item_quantity: totalItems,
