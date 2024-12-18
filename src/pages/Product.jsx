@@ -78,12 +78,12 @@ const Product = () => {
   };
 
   const addProduct = (product) => {
+    dispatch(setProductList(product));
     dispatch(addCart(product));
   };
 
   const selectProduct = (product) => {
     dispatch(viewProduct(product));
-    dispatch(setProductList(product));
   };
 
   useEffect(() => {
