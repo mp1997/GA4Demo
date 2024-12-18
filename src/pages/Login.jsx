@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     // Check if the credentials match any user in the JSON file
     const user = users.find(
-      (u) => u.email === email && u.password === password
+      (u) => u.email === email && u.idpass === password
     );
 
     if (user) {

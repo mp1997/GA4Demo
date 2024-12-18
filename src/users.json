@@ -3,14 +3,14 @@
     "firstname":"John",
     "lastname":"Smith",
     "email": "johnsmith@mail.com",
-    "password": "john9900",
+    "idpass": "john9900",
     "pseudo_user_id":"12089"
   },
   {
     "firstname":"Maria",
     "lastname":"Smith",
     "email": "mariasmith@mail.com",
-    "password": "maria1122",
+    "idpass": "maria1122",
     "pseudo_user_id":"12088"
   }
 ]
