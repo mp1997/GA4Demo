@@ -47,7 +47,6 @@ const Product = () => {
           name: state?.selectedProduct?.title,
           price: state?.selectedProduct?.price,
           category: state?.selectedProduct?.category,
-          quantity: state?.selectedProduct?.qty,
         },
       ],
       total_item_quantity: totalItems,
