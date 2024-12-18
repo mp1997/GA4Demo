@@ -5,7 +5,7 @@ import { gtag } from "ga-gtag";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const { product } = useSelector((state) => state.productReducer);
+  const { productList } = useSelector((state) => state.productReducer);
   const state = useSelector((state) => state.handleCart);
   const sessionTimeout = 2 * 60 * 1000; // 2 minutes in milliseconds
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -18,10 +18,11 @@ function Home() {
   const userID = sessionStorage.getItem("userID");
   let totalItems = 0;
   const sessionLogin = sessionStorage.getItem("sessionStart");
-  state.map((item) => {
+  state?.map((item) => {
     return (totalItems += item.qty);
   });
-  const items = product.map((prod) => ({
+
+  const items = productList?.map((prod) => ({
     id: prod?.id?.toString(),
     name: prod?.title,
     price: prod?.price,
@@ -42,10 +43,10 @@ function Home() {
 
     gtag("event", "custom_event", {
       event_timestamp: eventTimestamp,
-      item_id: product?.id,
-      item_category: product?.category,
-      item_name: product?.title,
-      item_price: product?.price,
+      // item_id: product?.id,
+      // item_category: product?.category,
+      // item_name: product?.title,
+      // item_price: product?.price,
       total_item_quantity: totalItems,
       debug_mode: true,
     });
@@ -140,7 +141,7 @@ function Home() {
       });
     }
     sendCustomEvent();
-  }, [product]);
+  }, [productList]);
 
   return (
     <>
