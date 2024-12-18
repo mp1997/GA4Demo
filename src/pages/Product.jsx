@@ -31,8 +31,8 @@ const Product = () => {
       id: prod?.id?.toString(),
       name: prod?.title,
       price: prod?.price,
-      category: prod.category,
-      quantity: prod.qty,
+      category: prod?.category,
+      quantity: prod?.qty,
     }));
     let totalItems = 0;
     cartState.map((item) => {
@@ -47,7 +47,6 @@ const Product = () => {
           name: state?.selectedProduct?.title,
           price: state?.selectedProduct?.price,
           category: state?.selectedProduct?.category,
-          quantity: state?.selectedProduct?.qty,
         },
       ],
       total_item_quantity: totalItems,
@@ -104,6 +103,10 @@ const Product = () => {
     };
     getProduct();
   }, [id]);
+
+  useEffect(() => {
+    sendCustomEvent();
+  }, [state, cartState]);
 
   const Loading = () => {
     return (
@@ -240,8 +243,6 @@ const Product = () => {
       </>
     );
   };
-
-  sendCustomEvent();
 
   return (
     <>
