@@ -42,20 +42,13 @@ function Home() {
     //   debug_mode: true,
     // });
 
-    // // working code
-    // gtag("event", "add_to_cart", {
-    //   event_timestamp: eventTimestamp,
-    //   items: items,
-    //   total_item_quantity: totalItems,
-    //   pseudo_user_id: userID,
-    //   first_name: firstName,
-    //   last_name: lastName,
-    //   is_active_user: "True",
-    //   user_first_touch_timestamp: sessionLogin,
-    //   item_timestamp: Date.now(),
-    //   user_timestamp: Date.now(),
-    //   debug_mode: true,
-    // });
+    // Send the page_view event
+    gtag("event", "page_view", {
+      // page_title: 'Product Details Page',
+      // page_location: 'https://example.com/product-details',
+      // page_referrer: 'https://example.com/home',
+      debug_mode: true,
+    });
 
     gtag("set", "user_properties", {
       pseudo_user_id: userID,

@@ -40,32 +40,16 @@ const Product = () => {
     });
 
     // Send the page_view event
-    // gtag('event', 'page_view', {
-    //   page_title: 'Product Details Page',
-    //   page_location: 'https://example.com/product-details',
-    //   page_referrer: 'https://example.com/home',
-    //   engagement_time_msec: 120000,
-    //   currency: 'USD',
-    //   value: 79.98,
-    //   items: [
-    //     {
-    //       item_id: 'SKU_12345',
-    //       item_name: 'T-Shirt',
-    //       item_category: 'Apparel',
-    //       item_variant: 'Red',
-    //       price: 29.99,
-    //       quantity: 2
-    //     },
-    //     {
-    //       item_id: 'SKU_67890',
-    //       item_name: 'Jeans',
-    //       item_category: 'Apparel',
-    //       item_variant: 'Blue',
-    //       price: 49.99,
-    //       quantity: 1
-    //     }
-    //   ]
-    // });
+    gtag('event', 'page_view', {
+      // page_title: 'Product Details Page',
+      // page_location: 'https://example.com/product-details',
+      // page_referrer: 'https://example.com/home',
+      engagement_time_msec: eventTimestamp,
+      currency: 'INR',
+      total_item_quantity: totalItems,
+      items: items,
+      debug_mode: true,
+    });
 
     gtag("event", "view_product", {
       event_timestamp: eventTimestamp,

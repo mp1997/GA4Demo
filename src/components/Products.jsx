@@ -33,6 +33,18 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const sendCustomEvent = () => {
+    // Send the page_view event
+    gtag("event", "page_view", {
+      // page_title: 'Product Details Page',
+      // page_location: 'https://example.com/product-details',
+      // page_referrer: 'https://example.com/home',
+      engagement_time_msec: eventTimestamp,
+      currency: "INR",
+      total_item_quantity: totalItems,
+      items: items,
+      debug_mode: true,
+    });
+
     if (state?.selectProduct) {
       gtag("event", "view_product", {
         event_timestamp: eventTimestamp,
