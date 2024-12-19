@@ -12,7 +12,7 @@ function Home() {
     sessionStorage.getItem("loggedIn") === "true"
   );
 
-  const eventTimestamp = Date.now();
+  // const eventTimestamp = Date.now();
   const firstName = sessionStorage.getItem("userFirstName");
   const lastName = sessionStorage.getItem("userLastName");
   const userID = sessionStorage.getItem("userID");
@@ -22,42 +22,40 @@ function Home() {
     return (totalItems += item.qty);
   });
 
-  const items = productList?.map((prod) => ({
-    id: prod?.id?.toString(),
-    name: prod?.title,
-    price: prod?.price,
-    category: prod.category,
-  }));
+  // const items = productList?.map((prod) => ({
+  //   id: prod?.id?.toString(),
+  //   name: prod?.title,
+  //   price: prod?.price,
+  //   category: prod.category,
+  // }));
 
   const navigate = useNavigate();
 
   const sendCustomEvent = () => {
-    gtag("event", "custom_event", {
-      event_timestamp: eventTimestamp,
-      // item_id: product?.id,
-      // item_category: product?.category,
-      // item_name: product?.title,
-      // item_price: product?.price,
-      total_item_quantity: totalItems,
-      debug_mode: true,
-    });
+    // gtag("event", "custom_event", {
+    //   event_timestamp: eventTimestamp,
+    //   // item_id: product?.id,
+    //   // item_category: product?.category,
+    //   // item_name: product?.title,
+    //   // item_price: product?.price,
+    //   total_item_quantity: totalItems,
+    //   debug_mode: true,
+    // });
 
-    // working code
-    gtag("event", "add_to_cart", {
-      event_timestamp: eventTimestamp,
-      items: items,
-      total_item_quantity: totalItems,
-      pseudo_user_id: userID,
-      first_name: firstName,
-      last_name: lastName,
-      is_active_user: "True",
-      user_first_touch_timestamp: sessionLogin,
-      item_timestamp: Date.now(),
-      user_timestamp: Date.now(),
-      debug_mode: true,
-    });
-
-    
+    // // working code
+    // gtag("event", "add_to_cart", {
+    //   event_timestamp: eventTimestamp,
+    //   items: items,
+    //   total_item_quantity: totalItems,
+    //   pseudo_user_id: userID,
+    //   first_name: firstName,
+    //   last_name: lastName,
+    //   is_active_user: "True",
+    //   user_first_touch_timestamp: sessionLogin,
+    //   item_timestamp: Date.now(),
+    //   user_timestamp: Date.now(),
+    //   debug_mode: true,
+    // });
 
     gtag("set", "user_properties", {
       pseudo_user_id: userID,
@@ -68,51 +66,8 @@ function Home() {
       debug_mode: true,
     });
 
-    // Send the add_to_cart event
-    gtag("event", "add_to_cart", {
-      currency: "INR",
-      total_item_quantity: totalItems,
-      items: items,
-    });
-
     console.log("Custom event triggered with timestamp:");
   };
-
-  async function sendAddToCartEvent() {
-    const eventPayload = {
-      eventType: "add_to_cart",
-      user: {
-        pseudo_user_id: userID,
-        first_name: firstName,
-        last_name: lastName,
-        is_active_user: "True",
-        user_first_touch_timestamp: sessionLogin,
-      },
-      products: items,
-    };
-
-    try {
-      const response = await fetch("http://localhost:3000/track-event", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(eventPayload),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // Parse the JSON response
-      const data = await response.json();
-      console.log("Event sent successfully:", data);
-    } catch (error) {
-      console.error("Error sending event:", error);
-    }
-  }
-
-  sendAddToCartEvent();
 
   useEffect(() => {
     if (isAuthenticated) {

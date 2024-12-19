@@ -9,22 +9,20 @@ import useGAEventTracker from "../hooks/useGAEventsTracker";
 const Cart = () => {
   const state = useSelector((state) => state.handleCart);
   const dispatch = useDispatch();
-  const eventTracker = useGAEventTracker("External Links");
+  const eventTracker = useGAEventTracker("External Links");const eventTimestamp = Date.now();
+  const firstName = sessionStorage.getItem("userFirstName");
+  const lastName = sessionStorage.getItem("userLastName");
+  const userID = sessionStorage.getItem("userID");
+  const sessionLogin = sessionStorage.getItem("sessionStart");
+  const items = state?.map((prod) => ({
+    id: prod?.id?.toString(),
+    name: prod?.title,
+    price: prod?.price,
+    category: prod?.category,
+    quantity: prod?.qty,
+  }));
 
   const sendCustomEvent = (totalItems) => {
-    const eventTimestamp = Date.now();
-    const firstName = sessionStorage.getItem("userFirstName");
-    const lastName = sessionStorage.getItem("userLastName");
-    const userID = sessionStorage.getItem("userID");
-    const sessionLogin = sessionStorage.getItem("sessionStart");
-    const items = state.map((prod) => ({
-      id: prod?.id?.toString(),
-      name: prod?.title,
-      price: prod?.price,
-      category: prod?.category,
-      quantity: prod?.qty,
-    }));
-
     gtag("event", "view_cart", {
       event_timestamp: eventTimestamp,
       items: items,
@@ -41,6 +39,41 @@ const Cart = () => {
 
     console.log("Custom event triggered with timestamp:", totalItems);
   };
+
+  async function sendViewCartEvent() {
+    const eventPayload = {
+      eventType: "view_cart",
+      user: {
+        pseudo_user_id: userID,
+        first_name: firstName,
+        last_name: lastName,
+        is_active_user: "True",
+        user_first_touch_timestamp: sessionLogin,
+      },
+      products: items,
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/track-event", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventPayload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Parse the JSON response
+      const data = await response.json();
+      console.log("Event sent successfully:", data);
+    } catch (error) {
+      console.error("Error sending event:", error);
+    }
+  }
+  sendViewCartEvent();
 
   const EmptyCart = () => {
     return (
