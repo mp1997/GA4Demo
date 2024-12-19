@@ -40,12 +40,12 @@ const Product = () => {
     });
 
     // Send the page_view event
-    gtag('event', 'page_view', {
+    gtag("event", "page_view", {
       // page_title: 'Product Details Page',
       // page_location: 'https://example.com/product-details',
       // page_referrer: 'https://example.com/home',
       engagement_time_msec: eventTimestamp,
-      currency: 'INR',
+      currency: "INR",
       total_item_quantity: totalItems,
       items: items,
       debug_mode: true,
@@ -55,10 +55,10 @@ const Product = () => {
       event_timestamp: eventTimestamp,
       items: [
         {
-          id: state?.selectedProduct?.id?.toString(),
-          name: state?.selectedProduct?.title,
+          item_id: state?.selectedProduct?.id?.toString(),
+          item_name: state?.selectedProduct?.title,
           price: state?.selectedProduct?.price,
-          category: state?.selectedProduct?.category,
+          item_category: state?.selectedProduct?.category,
         },
       ],
       total_item_quantity: totalItems,
@@ -115,8 +115,7 @@ const Product = () => {
       console.error("Error sending event:", error);
     }
   }
-  sendAddToCartEvent();
-  
+
   useEffect(() => {
     sendCustomEvent();
   }, [state, cartState]);
@@ -124,6 +123,7 @@ const Product = () => {
   const addProduct = (product) => {
     dispatch(setProductList(product));
     dispatch(addCart(product));
+    sendAddToCartEvent();
   };
 
   const selectProduct = (product) => {

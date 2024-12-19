@@ -50,10 +50,10 @@ const Products = () => {
         event_timestamp: eventTimestamp,
         items: [
           {
-            id: state?.selectedProduct?.id?.toString(),
-            name: state?.selectedProduct?.title,
+            item_id: state?.selectedProduct?.id?.toString(),
+            item_name: state?.selectedProduct?.title,
             price: state?.selectedProduct?.price,
-            category: state?.selectedProduct?.category,
+            item_category: state?.selectedProduct?.category,
           },
         ],
         total_item_quantity: totalItems,
