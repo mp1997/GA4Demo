@@ -95,25 +95,25 @@ const Product = () => {
       products: items,
     };
 
-    // try {
-    //   const response = await fetch("http://localhost:3000/track-event", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(eventPayload),
-    //   });
+    try {
+      const response = await fetch("http://localhost:3000/track-event", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventPayload),
+      });
 
-    //   if (!response.ok) {
-    //     throw new Error(`HTTP error! status: ${response.status}`);
-    //   }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    //   // Parse the JSON response
-    //   const data = await response.json();
-    //   console.log("Event sent successfully:", data);
-    // } catch (error) {
-    //   console.error("Error sending event:", error);
-    // }
+      // Parse the JSON response
+      const data = await response.json();
+      console.log("Event sent successfully:", data);
+    } catch (error) {
+      console.error("Error sending event:", error);
+    }
   }
 
   useEffect(() => {
