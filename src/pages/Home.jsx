@@ -44,9 +44,6 @@ function Home() {
 
     // Send the page_view event
     gtag("event", "page_view", {
-      // page_title: 'Product Details Page',
-      // page_location: 'https://example.com/product-details',
-      // page_referrer: 'https://example.com/home',
       debug_mode: true,
     });
 

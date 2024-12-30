@@ -68,7 +68,7 @@ const Products = () => {
       });
     }
 
-    if (items.length > 0) {
+    if (items?.length > 0) {
       // Send the add_to_cart event
       gtag("event", "add_to_cart", {
         currency: "INR",
@@ -80,9 +80,31 @@ const Products = () => {
     console.log("Custom event triggered with timestamp:", totalItems);
   };
 
+  async function sendEvent(eventType, eventPayload) {
+    try {
+      const response = await fetch("http://localhost:3000/track-event", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ eventType, ...eventPayload }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Parse the JSON response
+      const data = await response.json();
+      console.log(`${eventType} event sent successfully:`, data);
+    } catch (error) {
+      console.error(`Error sending ${eventType} event:`, error);
+    }
+  }
+
+  // Add To Cart Event
   async function sendAddToCartEvent() {
     const eventPayload = {
-      eventType: "add_to_cart",
       user: {
         pseudo_user_id: userID,
         first_name: firstName,
@@ -92,34 +114,78 @@ const Products = () => {
       },
       products: items,
     };
-
-    try {
-      const response = await fetch("http://localhost:3000/track-event", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(eventPayload),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // Parse the JSON response
-      const data = await response.json();
-      console.log("Event sent successfully:", data);
-    } catch (error) {
-      console.error("Error sending event:", error);
-    }
+    await sendEvent("add_to_cart", eventPayload);
   }
+
+  // View Product Event
+  async function sendViewProductEvent() {
+    const eventPayload = {
+      eventType: "view_product",
+      user: {
+        pseudo_user_id: userID,
+        first_name: firstName,
+        last_name: lastName,
+        is_active_user: "True",
+        items: [
+          {
+            item_id: state?.selectedProduct?.id?.toString(),
+            item_name: state?.selectedProduct?.title,
+            price: state?.selectedProduct?.price,
+            item_category: state?.selectedProduct?.category,
+          },
+        ],
+        user_first_touch_timestamp: sessionLogin,
+      },
+      products: items,
+    };
+    await sendEvent("view_product", eventPayload);
+  }
+
   sendAddToCartEvent();
+  sendViewProductEvent();
+
+  // async function sendAddToCartEvent() {
+  //   const eventPayload = {
+  //     eventType: "add_to_cart",
+  //     user: {
+  //       pseudo_user_id: userID,
+  //       first_name: firstName,
+  //       last_name: lastName,
+  //       is_active_user: "True",
+  //       user_first_touch_timestamp: sessionLogin,
+  //     },
+  //     products: items,
+  //   };
+
+  //   try {
+  //     const response = await fetch("http://localhost:3000/track-event", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(eventPayload),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+
+  //     // Parse the JSON response
+  //     const data = await response.json();
+  //     console.log("Event sent successfully:", data);
+  //   } catch (error) {
+  //     console.error("Error sending event:", error);
+  //   }
+  // }
+
+  // sendAddToCartEvent();
 
   useEffect(() => {
     sendCustomEvent();
   }, [state, cartState]);
 
   const addProduct = (product) => {
+    toast.success("Added to cart");
     dispatch(setProductList(product));
     dispatch(addCart(product));
   };
@@ -253,7 +319,6 @@ const Products = () => {
                   <button
                     className="btn btn-dark m-1"
                     onClick={() => {
-                      toast.success("Added to cart");
                       addProduct(product);
                     }}
                   >
