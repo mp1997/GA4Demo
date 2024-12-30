@@ -141,8 +141,8 @@ const Products = () => {
     await sendEvent("view_product", eventPayload);
   }
 
-  sendAddToCartEvent();
-  sendViewProductEvent();
+  // sendAddToCartEvent();
+  // sendViewProductEvent();
 
   // async function sendAddToCartEvent() {
   //   const eventPayload = {
@@ -188,10 +188,12 @@ const Products = () => {
     toast.success("Added to cart");
     dispatch(setProductList(product));
     dispatch(addCart(product));
+    sendAddToCartEvent();
   };
 
   const selectProduct = (product) => {
     dispatch(viewProduct(product));
+    sendViewProductEvent();
   };
 
   useEffect(() => {
