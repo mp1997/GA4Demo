@@ -26,9 +26,6 @@ const Cart = () => {
   const sendCustomEvent = (totalItems) => {
     // Send the page_view event
     gtag("event", "page_view", {
-      // page_title: 'Product Details Page',
-      // page_location: 'https://example.com/product-details',
-      // page_referrer: 'https://example.com/home',
       engagement_time_msec: eventTimestamp,
       currency: "INR",
       total_item_quantity: totalItems,
@@ -36,7 +33,7 @@ const Cart = () => {
       debug_mode: true,
     });
 
-    gtag("event", "view_cart", {
+    gtag("event", "cart_info", {
       event_timestamp: eventTimestamp,
       items: items,
       total_item_quantity: totalItems,
@@ -55,7 +52,7 @@ const Cart = () => {
 
   async function sendViewCartEvent() {
     const eventPayload = {
-      eventType: "view_cart",
+      eventType: "cart_info",
       user: {
         pseudo_user_id: userID,
         first_name: firstName,

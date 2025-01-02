@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components";
 import toast from "react-hot-toast";
-
+import { gtag } from "ga-gtag";
 import users from "../users.json"; // Import the mock user credentials
 
 const Login = () => {
@@ -11,12 +11,67 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const firstName = sessionStorage.getItem("userFirstName");
+  const lastName = sessionStorage.getItem("userLastName");
+  const userID = sessionStorage.getItem("userID");
+  const sessionLogin = sessionStorage.getItem("sessionStart");
+
+  useEffect(() => {
+    sendCustomEvent();
+  });
+
+  const sendCustomEvent = () => {
+    gtag("event", "signin_info", {
+      pseudo_user_id: userID,
+      first_name: firstName,
+      last_name: lastName,
+      user_first_touch_timestamp: sessionLogin,
+      is_active_user: "True",
+      user_timestamp: Date.now(),
+      debug_mode: true,
+    });
+  };
+
+  async function sendEvent(eventType, eventPayload) {
+    try {
+      const response = await fetch("http://localhost:3000/track-event", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ eventType, ...eventPayload }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Parse the JSON response
+      const data = await response.json();
+      console.log(`${eventType} event sent successfully:`, data);
+    } catch (error) {
+      console.error(`Error sending ${eventType} event:`, error);
+    }
+  }
+
+  // Add To Cart Event
+  async function sendSigninEvent() {
+    const eventPayload = {
+      user: {
+        pseudo_user_id: userID,
+        first_name: firstName,
+        last_name: lastName,
+        is_active_user: "True",
+        user_first_touch_timestamp: sessionLogin,
+      },
+    };
+    await sendEvent("signin_info", eventPayload);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Check if the credentials match any user in the JSON file
-    const user = users.find(
-      (u) => u.email === email && u.idpass === password
-    );
+    const user = users.find((u) => u.email === email && u.idpass === password);
 
     if (user) {
       const currentTime = Date.now();
@@ -29,6 +84,7 @@ const Login = () => {
       // Navigate to home page or dashboard
       navigate("/");
       toast.success(`Welcome, ${user?.firstname}`);
+      sendSigninEvent();
     } else {
       // Show error message
       setError("Invalid email or password. Please try again.");

@@ -35,9 +35,6 @@ const Products = () => {
   const sendCustomEvent = () => {
     // Send the page_view event
     gtag("event", "page_view", {
-      // page_title: 'Product Details Page',
-      // page_location: 'https://example.com/product-details',
-      // page_referrer: 'https://example.com/home',
       engagement_time_msec: eventTimestamp,
       currency: "INR",
       total_item_quantity: totalItems,
