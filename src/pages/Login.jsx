@@ -9,27 +9,29 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
-
-  const firstName = sessionStorage.getItem("userFirstName");
-  const lastName = sessionStorage.getItem("userLastName");
-  const userID = sessionStorage.getItem("userID");
-  const sessionLogin = sessionStorage.getItem("sessionStart");
 
   useEffect(() => {
     sendCustomEvent();
-  });
+  }, [loggedIn]);
 
   const sendCustomEvent = () => {
-    gtag("event", "signin_info", {
-      pseudo_user_id: userID,
-      first_name: firstName,
-      last_name: lastName,
-      user_first_touch_timestamp: sessionLogin,
-      is_active_user: "True",
-      user_timestamp: Date.now(),
-      debug_mode: true,
-    });
+    if (loggedIn) {
+      const firstName = sessionStorage.getItem("userFirstName");
+      const lastName = sessionStorage.getItem("userLastName");
+      const userID = sessionStorage.getItem("userID");
+      const sessionLogin = sessionStorage.getItem("sessionStart");
+      gtag("event", "signin_info", {
+        pseudo_user_id: userID,
+        first_name: firstName,
+        last_name: lastName,
+        user_first_touch_timestamp: sessionLogin,
+        is_active_user: "True",
+        user_timestamp: Date.now(),
+        debug_mode: true,
+      });
+    }
   };
 
   async function sendEvent(eventType, eventPayload) {
@@ -56,6 +58,10 @@ const Login = () => {
 
   // Add To Cart Event
   async function sendSigninEvent() {
+    const firstName = sessionStorage.getItem("userFirstName");
+    const lastName = sessionStorage.getItem("userLastName");
+    const userID = sessionStorage.getItem("userID");
+    const sessionLogin = sessionStorage.getItem("sessionStart");
     const eventPayload = {
       user: {
         pseudo_user_id: userID,
@@ -75,6 +81,7 @@ const Login = () => {
 
     if (user) {
       const currentTime = Date.now();
+      setLoggedIn(true);
       sessionStorage.setItem("loggedIn", "true");
       sessionStorage.setItem("userEmail", user?.email);
       sessionStorage.setItem("userFirstName", user?.firstname);
