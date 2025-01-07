@@ -198,7 +198,6 @@ const Products = () => {
 
   const selectProduct = (product) => {
     dispatch(viewProduct(product));
-    sendViewProductEvent();
   };
 
   useEffect(() => {

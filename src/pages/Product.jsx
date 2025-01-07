@@ -198,7 +198,6 @@ const Product = () => {
   };
 
   const selectProduct = (product) => {
-    sendViewProductEvent();
     dispatch(viewProduct(product));
   };
 
@@ -218,6 +217,7 @@ const Product = () => {
       setLoading2(false);
     };
     getProduct();
+    sendViewProductEvent();
   }, [id]);
 
   const Loading = () => {
