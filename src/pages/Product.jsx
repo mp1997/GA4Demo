@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { useDispatch, useSelector } from "react-redux";
 import { addCart, setProductList, viewProduct } from "../redux/action";
+import toast from "react-hot-toast";
 
 import { Navbar } from "../components";
 import useGAEventTracker from "../hooks/useGAEventsTracker";
@@ -182,6 +183,7 @@ const Product = () => {
   }, [state, cartState]);
 
   const addProduct = (product) => {
+    toast.success("Added to cart");
     dispatch(setProductList(product));
     dispatch(addCart(product));
     sendAddToCartEvent();
