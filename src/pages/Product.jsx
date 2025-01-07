@@ -117,14 +117,14 @@ const Product = () => {
   //   }
   // }
 
-  async function sendEvent(eventType, eventPayload) {
+  async function sendEvent(eventPayload) {
     try {
       const response = await fetch("http://localhost:3000/track-event", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ eventType, ...eventPayload }),
+        body: JSON.stringify(eventPayload),
       });
 
       if (!response.ok) {
@@ -133,15 +133,16 @@ const Product = () => {
 
       // Parse the JSON response
       const data = await response.json();
-      console.log(`${eventType} event sent successfully:`, data);
+      console.log(`Event sent successfully:`, data);
     } catch (error) {
-      console.error(`Error sending ${eventType} event:`, error);
+      console.error(`Error sending event:`, error);
     }
   }
 
   // Add To Cart Event
   async function sendAddToCartEvent() {
     const eventPayload = {
+      eventType:'add_to_cart',
       user: {
         pseudo_user_id: userID,
         first_name: firstName,
@@ -151,7 +152,7 @@ const Product = () => {
       },
       products: items,
     };
-    await sendEvent("add_to_cart", eventPayload);
+    await sendEvent(eventPayload);
   }
 
   // View Product Event
@@ -175,7 +176,7 @@ const Product = () => {
       },
       products: items,
     };
-    await sendEvent("view_product", eventPayload);
+    await sendEvent(eventPayload);
   }
 
   useEffect(() => {

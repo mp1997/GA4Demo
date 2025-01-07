@@ -34,28 +34,6 @@ const Login = () => {
     }
   };
 
-  async function sendEvent(eventType, eventPayload) {
-    try {
-      const response = await fetch("http://localhost:3000/track-event", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ eventType, ...eventPayload }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // Parse the JSON response
-      const data = await response.json();
-      console.log(`${eventType} event sent successfully:`, data);
-    } catch (error) {
-      console.error(`Error sending ${eventType} event:`, error);
-    }
-  }
-
   // Add To Cart Event
   async function sendSigninEvent() {
     const firstName = sessionStorage.getItem("userFirstName");
@@ -63,6 +41,7 @@ const Login = () => {
     const userID = sessionStorage.getItem("userID");
     const sessionLogin = sessionStorage.getItem("sessionStart");
     const eventPayload = {
+      eventType: 'signin_info',
       user: {
         pseudo_user_id: userID,
         first_name: firstName,
@@ -72,7 +51,25 @@ const Login = () => {
       },
       products: [],
     };
-    await sendEvent("signin_info", eventPayload);
+    try {
+      const response = await fetch("http://localhost:3000/track-event", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventPayload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Parse the JSON response
+      const data = await response.json();
+      console.log(`Event sent successfully:`, data);
+    } catch (error) {
+      console.error(`Error sending event:`, error);
+    }
   }
 
   const handleSubmit = (e) => {
