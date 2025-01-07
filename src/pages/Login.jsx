@@ -70,6 +70,7 @@ const Login = () => {
         is_active_user: "True",
         user_first_touch_timestamp: sessionLogin,
       },
+      products: [],
     };
     await sendEvent("signin_info", eventPayload);
   }
