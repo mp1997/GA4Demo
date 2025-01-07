@@ -73,8 +73,6 @@ const Products = () => {
         items: items,
       });
     }
-
-    console.log("Custom event triggered with timestamp:", totalItems);
   };
 
   async function sendEvent(eventPayload) {
@@ -115,85 +113,17 @@ const Products = () => {
     await sendEvent(eventPayload);
   }
 
-  // View Product Event
-  async function sendViewProductEvent() {
-    const eventPayload = {
-      eventType: "view_product",
-      user: {
-        pseudo_user_id: userID,
-        first_name: firstName,
-        last_name: lastName,
-        is_active_user: "True",
-        items: [
-          {
-            item_id: state?.selectedProduct?.id?.toString(),
-            item_name: state?.selectedProduct?.title,
-            price: state?.selectedProduct?.price,
-            item_category: state?.selectedProduct?.category,
-          },
-        ],
-        user_first_touch_timestamp: sessionLogin,
-      },
-      products: [
-        {
-          item_id: state?.selectedProduct?.id?.toString(),
-          item_name: state?.selectedProduct?.title,
-          price: state?.selectedProduct?.price,
-          item_category: state?.selectedProduct?.category,
-        },
-      ],
-    };
-    await sendEvent(eventPayload);
-  }
-
-  // sendAddToCartEvent();
-  // sendViewProductEvent();
-
-  // async function sendAddToCartEvent() {
-  //   const eventPayload = {
-  //     eventType: "add_to_cart",
-  //     user: {
-  //       pseudo_user_id: userID,
-  //       first_name: firstName,
-  //       last_name: lastName,
-  //       is_active_user: "True",
-  //       user_first_touch_timestamp: sessionLogin,
-  //     },
-  //     products: items,
-  //   };
-
-  //   try {
-  //     const response = await fetch("http://localhost:3000/track-event", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(eventPayload),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! status: ${response.status}`);
-  //     }
-
-  //     // Parse the JSON response
-  //     const data = await response.json();
-  //     console.log("Event sent successfully:", data);
-  //   } catch (error) {
-  //     console.error("Error sending event:", error);
-  //   }
-  // }
-
-  // sendAddToCartEvent();
-
   useEffect(() => {
     sendCustomEvent();
+    if (items?.length > 0) {
+      sendAddToCartEvent();
+    }
   }, [state, cartState]);
 
   const addProduct = (product) => {
     toast.success("Added to cart");
     dispatch(setProductList(product));
     dispatch(addCart(product));
-    sendAddToCartEvent();
   };
 
   const selectProduct = (product) => {

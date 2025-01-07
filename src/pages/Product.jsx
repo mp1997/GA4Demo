@@ -42,9 +42,6 @@ const Product = () => {
 
     // Send the page_view event
     gtag("event", "page_view", {
-      // page_title: 'Product Details Page',
-      // page_location: 'https://example.com/product-details',
-      // page_referrer: 'https://example.com/home',
       engagement_time_msec: eventTimestamp,
       currency: "INR",
       total_item_quantity: totalItems,
@@ -82,40 +79,6 @@ const Product = () => {
 
     console.log("Custom event triggered with timestamp:", totalItems);
   };
-
-  // async function sendAddToCartEvent() {
-  //   const eventPayload = {
-  //     eventType: "add_to_cart",
-  //     user: {
-  //       pseudo_user_id: userID,
-  //       first_name: firstName,
-  //       last_name: lastName,
-  //       is_active_user: "True",
-  //       user_first_touch_timestamp: sessionLogin,
-  //     },
-  //     products: items,
-  //   };
-
-  //   try {
-  //     const response = await fetch("http://localhost:3000/track-event", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(eventPayload),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! status: ${response.status}`);
-  //     }
-
-  //     // Parse the JSON response
-  //     const data = await response.json();
-  //     console.log("Event sent successfully:", data);
-  //   } catch (error) {
-  //     console.error("Error sending event:", error);
-  //   }
-  // }
 
   async function sendEvent(eventPayload) {
     try {
@@ -188,13 +151,15 @@ const Product = () => {
 
   useEffect(() => {
     sendCustomEvent();
+    if (items?.length > 0) {
+      sendAddToCartEvent();
+    }
   }, [state, cartState]);
 
   const addProduct = (product) => {
     toast.success("Added to cart");
     dispatch(setProductList(product));
     dispatch(addCart(product));
-    sendAddToCartEvent();
   };
 
   const selectProduct = (product) => {
