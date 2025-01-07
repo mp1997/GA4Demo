@@ -134,7 +134,14 @@ const Products = () => {
         ],
         user_first_touch_timestamp: sessionLogin,
       },
-      products: items,
+      products: [
+        {
+          item_id: state?.selectedProduct?.id?.toString(),
+          item_name: state?.selectedProduct?.title,
+          price: state?.selectedProduct?.price,
+          item_category: state?.selectedProduct?.category,
+        },
+      ],
     };
     await sendEvent(eventPayload);
   }

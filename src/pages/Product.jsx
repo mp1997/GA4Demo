@@ -142,7 +142,7 @@ const Product = () => {
   // Add To Cart Event
   async function sendAddToCartEvent() {
     const eventPayload = {
-      eventType:'add_to_cart',
+      eventType: "add_to_cart",
       user: {
         pseudo_user_id: userID,
         first_name: firstName,
@@ -174,7 +174,14 @@ const Product = () => {
         ],
         user_first_touch_timestamp: sessionLogin,
       },
-      products: items,
+      products: [
+        {
+          item_id: state?.selectedProduct?.id?.toString(),
+          item_name: state?.selectedProduct?.title,
+          price: state?.selectedProduct?.price,
+          item_category: state?.selectedProduct?.category,
+        },
+      ],
     };
     await sendEvent(eventPayload);
   }
